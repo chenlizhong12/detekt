@@ -10,10 +10,8 @@ class MyPresent : LifecycleObserver {
 
     private var mView: IView? = null
 
-    val fileService: IView by inject()
 
-    constructor()
-    fun MyPresent(view: IView) {
+    public fun setOnViewState(view: IView) {
         mView = view
     }
 

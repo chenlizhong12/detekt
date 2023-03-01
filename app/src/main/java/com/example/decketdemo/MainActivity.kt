@@ -7,13 +7,24 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 
-class MainActivity : AppCompatActivity(), IView, View.OnClickListener {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        lifecycle.addObserver(MyPresent(this))
+        val myPresent = MyPresent()
+        lifecycle.addObserver(myPresent)
+        myPresent.setOnViewState(object : IView {
+            override fun showView() {
+                Log.i("陈立中", "showView: ")
+            }
+
+            override fun closeView() {
+                Log.i("陈立中", "closeView: ")
+            }
+
+        })
         findViewById<TextView>(R.id.tv_hello).setOnClickListener {
-            var intent = Intent (this, TestActivity::class.java)
+            var intent = Intent(this, TestActivity::class.java)
             startActivity(intent)
         }
     }
@@ -28,20 +39,4 @@ class MainActivity : AppCompatActivity(), IView, View.OnClickListener {
         Log.i("陈立中", "onPause: ")
     }
 
-    override fun showView() {
-        Log.i("陈立中", "showView: ")
-    }
-
-    override fun closeView() {
-        Log.i("陈立中", "closeView: ")
-    }
-
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
-    override fun onClick(v: View?) {
-        
-    }
 }
